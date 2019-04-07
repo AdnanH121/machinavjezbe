@@ -3,5 +3,7 @@
 int main()
 {
 	std::cout << "Hello World" << std::endl;
+	std::cout << "Kako ste" << std::endl;
+
 	system("pause");
 }
