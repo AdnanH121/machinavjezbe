@@ -26,8 +26,40 @@ public:
 	{
 		hp -= ammount;
 	}
+
+	
 };
 
+int checkHits(int& hp, int& strength, std::string& userName)
+{
+	hp -= strength;
+	if (hp > 0)
+	{
+		//hp -= strength;
+		std::cout << "Player " << userName << " lost " << strength << " hitpoints" << std::endl;
+		std::cout << "Player " << userName << " now has " << hp << " hitpoints" << std::endl;
+
+	}
+	if (hp <= 0)
+	{
+		hp = 0;
+		std::cout << "Player " << userName << " je mrtav!!!" << std::endl;
+	}
+	return hp - strength;
+}
+
+void chooseName(std::string& plOne, std::string& plTwo, std::string& plThree)
+{
+	
+	std::cout << "Izaberite ime za prvog igraca: ";
+	std::getline(std::cin, plOne);
+
+	std::cout << "Izaberite ime za drugog igraca: ";
+	std::getline(std::cin, plTwo);
+
+	std::cout << "Izaberite ime za treceg igraca: ";
+	std::getline(std::cin, plThree);
+}
 
 void move(int& x, int& y, int& velocity)
 {
@@ -38,30 +70,20 @@ void move(int& x, int& y, int& velocity)
 int main()
 {
 
-	std::string plOne = " ", plTwo = " ", plThree = " ";
-	std::cout << "Izaberite ime za prvog igraca: ";
-	std::getline(std::cin, plOne);
-
-	std::cout << "Izaberite ime za drugog igraca: ";
-	std::getline(std::cin, plTwo);
-
-	std::cout << "Izaberite ime za treceg igraca: ";
-	std::getline(std::cin, plThree);
-
+	
+	
 
 	Player playerOne = Player(0, 0, 10, 30);
-	playerOne.userName = plOne;
 	playerOne.strength = 12;
 
 
 	Player playerTwo = Player(10, 15, 10, 30);
-	playerTwo.userName = plTwo;
 	playerTwo.strength = 11;
 
 	Player playerThree = Player(20, 25, 10, 25);
-	playerThree.userName = plThree;
 	playerThree.strength = 15;
 
+	chooseName(playerOne.userName, playerTwo.userName, playerThree.userName);
 
 
 	playerOne.move();
@@ -122,94 +144,28 @@ int main()
 
 		if (hitCheck == 1 && toHitCheck == 2)
 		{
-			if (playerTwo.hp > 0)
-			{
-				playerTwo.damage(playerOne.strength);
-				std::cout << "Player two lost " << playerOne.strength << " hitpoints" << std::endl;
-				std::cout << "Player two now has " << playerTwo.hp << " hitpoints" << std::endl;
-				
-			}
-			 if (playerTwo.hp <= 0)
-			{
-				playerTwo.hp = 0;
-				std::cout << "Player " << playerTwo.userName << " je mrtav!!!" << std::endl;
-			}
+			checkHits(playerTwo.hp, playerOne.strength, playerTwo.userName); //checkHits(int& hp, int& strength, std::string& userName)
 		}
 		else if (hitCheck == 1 && toHitCheck == 3)
 		{
-			if (playerThree.hp > 0)
-			{
-				playerThree.damage(playerOne.strength);
-				std::cout << "Player three lost " << playerOne.strength << " hitpoints" << std::endl;
-				std::cout << "Player three now has " << playerThree.hp << " hitpoints" << std::endl;
-				
-			}
-			 if (playerThree.hp <= 0)
-			{
-				playerThree.hp = 0;
-				std::cout << "Player " << playerThree.userName << " je mrtav!!!" << std::endl;
-			}
+			checkHits(playerThree.hp, playerOne.strength,  playerThree.userName);
 		}
 		else if (hitCheck == 2 && toHitCheck == 1)
 		{
-			if (playerOne.hp > 0)
-			{
-				playerOne.damage(playerTwo.strength);
-				std::cout << "Player one lost " << playerTwo.strength << " hitpoints" << std::endl;
-				std::cout << "Player one now has " << playerOne.hp << " hitpoints" << std::endl;
-				
-			}
-			 if (playerOne.hp <= 0)
-			{
-				playerOne.hp = 0;
-				std::cout << "Player " << playerOne.userName << " je mrtav!!!" << std::endl;
-			}
+			checkHits(playerOne.hp, playerTwo.strength, playerOne.userName);
 		}
 		else if (hitCheck == 2 && toHitCheck == 3)
 		{
-			if (playerThree.hp > 0)
-			{
-				playerThree.damage(playerTwo.strength);
-				std::cout << "Player three lost " << playerTwo.strength << " hitpoints" << std::endl;
-				std::cout << "Player three now has " << playerThree.hp << " hitpoints" << std::endl;
-				
-			}
-		 if (playerThree.hp <= 0)
-		{
-				playerThree.hp = 0;
-				std::cout << "Player " << playerThree.userName << " je mrtav!!!" << std::endl;
-		}
+			checkHits(playerThree.hp, playerTwo.strength, playerThree.userName);
 		}
 
 		else if (hitCheck == 3 && toHitCheck == 1)
 		{
-			if (playerOne.hp > 0)
-			{
-				playerOne.damage(playerThree.strength);
-				std::cout << "Player one lost " << playerThree.strength << " hitpoints" << std::endl;
-				std::cout << "Player one now has " << playerOne.hp << " hitpoints" << std::endl;
-				
-			}
-			 if(playerOne.hp <= 0)
-			{
-				playerOne.hp = 0;
-				std::cout << "Player " << playerOne.userName << " je mrtav!!!" << std::endl;
-			}
+			checkHits(playerOne.hp, playerThree.strength, playerOne.userName);
 		}
 		else if (hitCheck == 3 && toHitCheck == 2)
 		{
-			if (playerTwo.hp > 0)
-			{
-				playerTwo.damage(playerThree.strength);
-				std::cout << "Player two lost " << playerThree.strength << " hitpoints" << std::endl;
-				std::cout << "Player two now has " << playerTwo.hp << " hitpoints" << std::endl;
-				
-			}
-			 if(playerTwo.hp <= 0)
-			{
-				playerTwo.hp = 0;
-				std::cout << "Player " << playerTwo.userName << " je mrtav!!!" << std::endl;
-			}
+			checkHits(playerTwo.hp, playerThree.strength, playerTwo.userName);
 		}
 		if (playerOne.hp <= 0 && playerTwo.hp <= 0)
 			bigCheck = false;
@@ -245,7 +201,7 @@ int main()
 
 
 	std::cout << winningPlayer << " wins! Congratulations!" << std::endl;
-	std::cout << losingPlayer1 << " " << losingPlayer2 << " lost! Better luck next time bois!" << std::endl;
+	std::cout << losingPlayer1 << " and " << losingPlayer2 << " lost! Better luck next time!" << std::endl;
 
 	// Napraviti treceg playera, te postaviti mogucnost za biranje usernamea (korisnik sam unosi 
 	// username).
