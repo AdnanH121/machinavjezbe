@@ -1,0 +1,13 @@
+﻿'machinavjezbe.exe' (Win32): Loaded 'C:\Users\majst\source\repos\machinavjezbe\x64\Debug\machinavjezbe.exe'. Symbols loaded.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\ntdll.dll'. Cannot find or open the PDB file.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\kernel32.dll'. Cannot find or open the PDB file.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\KernelBase.dll'. Cannot find or open the PDB file.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\vcruntime140d.dll'. Cannot find or open the PDB file.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\ucrtbased.dll'. Cannot find or open the PDB file.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\msvcp140d.dll'. Cannot find or open the PDB file.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\sechost.dll'. Cannot find or open the PDB file.
+'machinavjezbe.exe' (Win32): Loaded 'C:\Windows\System32\rpcrt4.dll'. Cannot find or open the PDB file.
+The thread 0x32c8 has exited with code 0 (0x0).
+The thread 0x19f8 has exited with code 0 (0x0).
+The thread 0xfa8 has exited with code 0 (0x0).
+The program '[6108] machinavjezbe.exe' has exited with code 0 (0x0).
