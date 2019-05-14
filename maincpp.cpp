@@ -1,150 +1,317 @@
 #include <iostream>
-#include <string>
+#include<string>
+#include<vector>
+#include<cstdlib>
+#include<ctime>
 
-class Player
+class Card
 {
+  public:
+	  int randomCard;
+	  
+	  int randomGivenCards()
+	  {
+		  int randomCard1;
+		  int randomCard2;
+		  int c;
+		  bool check = true;
+		  srand(time(NULL));
+		  while (check)
+		  {
+			  randomCard1 = (rand() % 13) + 1;
+			  
+			  randomCard2 = (rand() % 13) + 1;
+			  
+			  c = randomCard1 + randomCard2;
+			  if (c <= 21)
+			  {
+				  std::cout << randomCard1 << std::endl;
+				  std::cout << randomCard2 << std::endl;
+				  check = false;
+				  return c;
+			  }
 
-public:
-	Player(int positionX, int positionY, int currentVelocity, int hitPoints)
-	{
-		x = positionX;
-		y = positionY;
-		velocity = currentVelocity;
-		hp = hitPoints;
-	}
+		  }
+		  return c;
+	  }
+	
 
-	int x, y, velocity, hp, strength;
-	std::string userName;
+	  void drawCard(char choice)
+	  {
+		  
 
-	void move()
-	{
-		x += velocity;
-		y += velocity;
-	}
+		  bool choiceCheck = true;
+		  while (choiceCheck)
+		  {
+			  
 
-	void damage(int ammount)
-	{
-		hp -= ammount;
-	}
+			  if (choice == 'n' || choice == 'N')
+			  {
+				  choiceCheck = false;
+				  break;
+			  }
+			  else if (choice == 'y' || choice == 'Y')
+			  {
+				  
+                  randomCard = (rand() % 13) + 1;
+				  std::cout << "Player Card: " << randomCard << std::endl;
+				  return;
+			  }
 
-	std::string getPrivateString()
-	{
-		return _privateString;
-	}
+			  else
+			  {
+				  std::cout << "ERROR.Wrong input, choose beetwen y or n!" << std::endl;
+				  return;
+			  }
+		  }//End of while loop
+		  
+	  }//end of drawCard
 
-	void setPrivateString(std::string stringParm)
-	{
-		_privateString = stringParm;
-	}
-
-private:
-
-	std::string _privateString;
-
-protected:
-
-	std::string _protectedString;
-
+ private:
+	std::string _type;
+	int _value, _position;
 
 };
 
-
-void move(int& x, int& y, int& velocity)
+int randomGivenCards1()
 {
-	x += velocity;
-	y += velocity;
+	
+	int randomCard3;
+	int randomCard4;
+	int c;
+	bool check = true;
+	
+	while (check)
+	{
+		randomCard3 = (rand() % 13) + 1;
+
+		randomCard4 = (rand() % 13) + 1;
+
+		c = randomCard3 + randomCard4;
+		if (c <= 21)
+		{
+			std::cout << randomCard3 << std::endl;
+			std::cout << randomCard4 << std::endl;
+			check = false;
+			return c;
+		}
+	}
+	return c;
 }
+
 
 int main()
 {
-	int number = 5;
-	int& tracker = number;
-	int* ptr = &number;
-	std::string* stringptr;
-	std::string someWord = "Nesto";
-	stringptr = &someWord;
-	int** doubleptr = &ptr;
-
-	number = 9;
-	std::cout << "Hello world" << std::endl;
-	std::cout << "number: " << number << std::endl;
-	std::cout << "number: " << tracker << std::endl;
-	std::cout << "ptr: " << ptr << std::endl;
-	std::cout << "stringptr: " << stringptr << std::endl;
-
-	std::cout << "derefference stringptr: " << *stringptr << std::endl;
-	*stringptr = "nesto drugo";
-	Player playerOne = Player(0, 0, 10, 30);
-	playerOne.userName = "Chaos";
-	playerOne.strength = 12;
-
-
-	Player playerTwo = Player(10, 15, 10, 30);
-	playerTwo.userName = "robi256";
-	playerTwo.strength = 11;
-
-	playerOne.move();
-	playerTwo.move();
-
-	playerOne.setPrivateString("Ja sam privatan!");
-
-	std::cout << playerOne.getPrivateString() << std::endl;
-
-	std::string losingPlayer;
-	std::string winningPlayer;
-
-	std::cout << "derefference stringptr take 2: " << *stringptr << std::endl;
-	std::cout << "doubleptr ptr address: " << *doubleptr << std::endl;
-	std::cout << "doubleptr ptr address: " << **doubleptr << std::endl;
-	while (playerOne.hp > 0 && playerTwo.hp > 0)
+	bool inputCheck = true;
+	bool mainCheck = true;
+	bool playerInputCheck = true;
+	bool dealerInputCheck = true;
+	bool checkBet = true;
+	char choice;
+	int playerRandomCards = 0;
+	int dealerRandomCards = 0;
+	int playerMoney = 1000;
+	int dealerMoney = 1000;
+	int playerMoneyDraw = 0;
+	int dealerMoneyDraw = 0;
+	int playerBet = 0;
+	int dealerBet = 0;
+	int gameFlow = 0;
+	Card card;
+	
+	
+	while (inputCheck)
 	{
-		int check;
-		std::cout << "Choose which player you want to hit: ";
-		std::cin >> check;
-		std::cout << std::endl;
+		std::cout << "1. Start game\n\n"
+			"2. Exit\n\n";
+		std::cin >> gameFlow;
 
-		std::cin.ignore(1000, '\n');
-		std::cin.clear();
-		switch (check)
+		switch (gameFlow)
 		{
 		case 1:
-			playerOne.damage(playerTwo.strength);
-			std::cout << "Player one lost 5 hitpoints" << std::endl;
+		{
+
+			int& playerRandomCard = card.randomCard;
+			
+			while (mainCheck)
+			{
+				dealerInputCheck = true;
+				playerInputCheck = true;
+
+				checkBet = true;
+				
+
+				while (checkBet)
+				{ 
+					std::cout << "Enter your bet: ";
+					std::cin >> playerBet;
+					std::cin.clear();
+					std::cin.ignore(10000, '\n');
+					std::cout << std::endl;
+					if (playerBet > playerMoney)
+					{
+						std::cout << "ERROR!!! You don t have that much money\n";
+					}
+					else
+						checkBet = false;
+					if (playerBet <= dealerMoney)
+					{
+						dealerBet = playerBet;
+					}
+					else
+					dealerBet = dealerMoney;
+					
+					playerMoneyDraw = playerMoney;
+					dealerMoneyDraw = dealerMoney;
+					playerMoney -= playerBet;
+					dealerMoney -= dealerBet;
+				}
+
+				playerRandomCards = card.randomGivenCards();
+				dealerRandomCards = randomGivenCards1();
+
+
+
+
+				std::cout << "Player cards: " << playerRandomCards;
+				std::cout << "\nDealer cards: " << dealerRandomCards << "\n";
+
+				while (playerInputCheck)
+				{
+					std::cout << "Hit card(y) or stand(n)" << std::endl;
+					std::cin >> choice;
+					std::cin.clear();
+					std::cin.ignore(10000, '\n');
+					if (choice == 'n' || choice == 'N')
+					{
+						playerInputCheck = false;
+						break;
+					}
+					else if (choice == 'y' || choice == 'Y')
+					{
+
+						card.drawCard(choice);
+
+						playerRandomCards += playerRandomCard;
+						std::cout << "\nPlayer cards after draw " << playerRandomCards << std::endl;
+						if (playerRandomCards == 21)
+						{
+							std::cout << "Congradilations. You earned max points!!!" << std::endl;
+							playerInputCheck = false;
+							break;
+						}
+						if (playerRandomCards > 21)
+						{
+							std::cout << "You lost!" << std::endl;
+							//playerMoney -= playerBet;
+							dealerMoney =dealerMoney + (playerBet * 2);
+							playerInputCheck = false;
+							dealerInputCheck = false;
+							break;
+						}
+
+					}
+					else
+						std::cout << "ERROR.Wrong input!" << std::endl;
+
+
+				}// end of playerInputCheck
+
+				while (dealerInputCheck)
+				{
+
+					if (dealerRandomCards == playerRandomCards)
+					{
+						std::cout << "DRAW!" << std::endl;
+						
+						playerMoney = playerMoneyDraw;
+						dealerMoney = dealerMoneyDraw ;
+
+						break;
+					}
+
+					
+					if (dealerRandomCards >= 18 && dealerRandomCards <= 21 && dealerRandomCards > playerRandomCards)
+					{
+						std::cout << "Dealer don t want to draw a card this round!" << std::endl;
+						break;
+					}
+				  if (dealerRandomCards < playerRandomCards) 
+					{
+						
+						while (dealerRandomCards < playerRandomCards)
+						{
+							int dealerRandomCard = (rand() % 13) + 1;
+							std::cout << "Dealer pick card " << dealerRandomCard  << std::endl;
+							dealerRandomCards += dealerRandomCard;
+							std::cout << "\nDealer cards after draw " << dealerRandomCards << std::endl;
+							if (dealerRandomCards > 21)
+							{
+								std::cout << "Dealer lost this round!!!" << std::endl;
+								playerMoney = playerMoney + (dealerBet * 2);
+								break;
+							}
+							else if (dealerRandomCards > playerRandomCards)
+							{
+								std::cout << "Dealer won this round!" << std::endl;
+								dealerMoney = dealerMoney + (playerBet * 2);
+								break;
+							}
+							
+							
+							
+						}
+						break;
+
+					}
+					if (dealerRandomCards > playerRandomCards && dealerRandomCards <= 21)
+					{
+						std::cout << "Dealer won this round!" << std::endl;
+						dealerMoney = dealerMoney + (playerBet * 2);
+						break;
+					}
+					if (playerRandomCards > dealerRandomCards )
+					{
+						std::cout << "Player won this round!\n";
+						playerMoney = playerMoney + (dealerBet * 2);
+						break;
+						//dealerMoney -= dealerBet;
+
+					}
+				}//end of dealerInputCheck
+
+				std::cout << "Player money: " << playerMoney;
+				std::cout << "\n\nDealer money: " << dealerMoney << "\n\n\n";
+				
+
+				if (playerMoney <= 0)
+				{
+					std::cout << "Congradilations Mr. Dealer! You won\n" << std::endl;
+					mainCheck = false;
+
+				}
+				if (dealerMoney <= 0)
+				{
+					std::cout << "Congradilations Mr. Player! You won\n" << std::endl;
+					mainCheck = false;
+				}
+
+			}//end of main while loop
+
 			break;
+
+		}//case 1 end
+
 		case 2:
-			playerTwo.damage(playerOne.strength);
-			std::cout << "Player two lost 5 hitpoints" << std::endl;
+			inputCheck = false;
 			break;
+
 		default:
+			std::cout << "ERROR! Wrong input!!!\n\n";
 			break;
-		}
 
-		std::cout << "Player one hitpoints: " << playerOne.hp << std::endl;
-		
-			
 
-			
-			std::cout << "Player two hitpoints: " << playerTwo.hp << std::endl;
-		std::cout << std::endl;
-
-		if (playerOne.hp <= 0)
-		{
-			losingPlayer = playerOne.userName;
-			winningPlayer = playerTwo.userName;
-		}
-		else if (playerTwo.hp <= 0)
-		{
-			losingPlayer = playerTwo.userName;
-			winningPlayer = playerOne.userName;
-		}
-	}
-
-	std::cout << winningPlayer << " wins! Congratulations!" << std::endl;
-	std::cout << losingPlayer << " lost! Better luck next time!" << std::endl;
-
-	// Napraviti treceg playera, te postaviti mogucnost za biranje usernamea (korisnik sam unosi 
-	// username).
-	// Prosiriti mogucnost damageanja playera tako da se bira koji ce kojeg udariti.
-
-	std::cin.get();
+		}//end of switch
+	}//end of input check
+	system("pause");
 }
