@@ -88,12 +88,7 @@ void dealerDrawCard()
 	while (check)
 	{
 		
-		/*if ((dealerRandomCards > playerRandomCards) && (dealerRandomCards >= 15 ))
-		{
-			std::cout << "Dealer don t want to pick a card this round!" << std::endl;
-			check = false;
-			break;
-		}*/
+		
 
 		if ((dealerRandomCards < playerRandomCards) || (dealerRandomCards >= 10 && dealerRandomCards < 14))
 		{
@@ -131,25 +126,28 @@ void placeBet(bool& checkBet, int& playerMoney, int& playerTempMoney,
 			std::cin.clear();
 			std::cin.ignore(10000, '\n');
 			std::cout << std::endl;
+
+			
 		
 		if (playerBet > playerMoney)
 		{
 			std::cout << "ERROR!!! You don t have that much money\n";
+			
 		}
-		else
-			checkBet = false;
-		if (playerBet <= dealerMoney)
+		else if (playerBet > dealerMoney)
 		{
-			dealerBet = playerBet;
+			std::cout << "Warning! Bet can't be higher then dealer's money\n";
+			
 		}
 		else
-			dealerBet = dealerMoney;
-
-		playerTempMoney = playerMoney;
-		dealerTempMoney = dealerMoney;
-		playerMoney -= playerBet;
-		dealerMoney -= dealerBet;
-	
+		{
+			checkBet = false;
+			dealerBet = playerBet;
+			playerTempMoney = playerMoney;
+			dealerTempMoney = dealerMoney;
+			playerMoney -= playerBet;
+			dealerMoney -= dealerBet;
+		}
 }
 
  void checkResult(int& _playerMoney, int& _playerTempMoney , int& _dealerMoney, int& _dealerTempMoney,
@@ -195,11 +193,11 @@ void placeBet(bool& checkBet, int& playerMoney, int& playerTempMoney,
 	if (playerCards < dealerCards && dealerCards <= 21)
 	{
 		std::cout << "You loose !!!";
+		
 		 _dealerMoney = _dealerMoney + (_playerBet * 2);
 		
 	}
-	 _playerMoney;
-	 _dealerMoney;
+	
 }
 
 
