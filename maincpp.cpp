@@ -1,341 +1,268 @@
 #include <iostream>
 #include<string>
 #include<vector>
-#include<cstdlib>
-#include<ctime>
 
-class Card
+class IShape
 {
 public:
 
-	int randCardOne;
-	int randCardTwo;
-	int randCardThree;
-	int randCardFour;
-	int playerRandomCards;
-	int dealerRandomCards;
-
+	virtual double getPerimiter() = 0;
+	virtual double getArea() = 0;
+	virtual std::string getName() = 0;
+	virtual void setValue() = 0;
+	virtual void printShapeInfo() = 0;
 	
-
-
-	
-
-
-	void randomCards()
-	{
-		srand(time(NULL));
-		 randCardOne = (rand() % 10) + 1;
-		 randCardTwo = (rand() % 10) + 1;
-		 if ((randCardOne == 10 && randCardTwo == 1) || (randCardOne == 1 && randCardTwo == 10))
-			 playerRandomCards = 21;
-		 else
-			  playerRandomCards = randCardOne + randCardTwo;
-
-		  randCardThree = (rand() % 10) + 1;
-	      randCardFour = (rand() % 10) + 1;
-		 if ((randCardThree == 10 && randCardFour == 1) || (randCardThree == 1 && randCardFour == 10))
-			  dealerRandomCards = 21;
-		 else
-			  dealerRandomCards = randCardThree + randCardFour;
-    }
-	
-
-private:
-	int _firstValue, _secondValue, _drawValue;
 };
 
-class Player : public Card
+class Triangle : public IShape
 {
 public:
-	void playerCards()
-	{
-		std::cout << "Your cards: " << randCardOne << " and " << randCardTwo << " , which is " << playerRandomCards << " points!"<<std::endl;
-	}
+	float a = 0.f, b = 0.f, c = 0.f;
 	
-	void drawCard()
+
+
+	void setValue()
 	{
-		
-
-				
-					int pickCard = (rand() % 10) + 1;
-					playerRandomCards += pickCard;
-					
-					std::cout << "You picked card " << pickCard << "\n"
-						"\nand now you have " << playerRandomCards << std::endl;
-					if (playerRandomCards > 21)
-					{
-						std::cout << playerRandomCards << " points!!!You loose " << std::endl;
-						
-
-					}
-
-	}
-
-};
-class Dealer : public Player
-{
-public:
-
-	
-void dealerCards()
-{
-	std::cout << "Dealer cards: " << randCardThree << " and " << randCardFour << " , which is " << dealerRandomCards << " points!" << std::endl;
-}
-void dealerDrawCard()
-{
-	 bool check = true;
-	
-	while (check)
-	{
-		
-		
-
-		if ((dealerRandomCards < playerRandomCards) || (dealerRandomCards >= 10 && dealerRandomCards < 14))
+		bool check = true;
+		while (check)
 		{
-			int dealerPickCard = (rand() % 10) + 1;
-			dealerRandomCards += dealerPickCard;
-			std::cout << "Dealer picked card " << dealerPickCard << "\n"
-				"\nand now has " << dealerRandomCards << std::endl;
-			if (dealerRandomCards >= 21)
-			{
-				
-				check = false;
-				break;
-			}
-
-
-		}
-		else
-		{
-			check = false;
-			break;
-		}
-	}
-}
-};
-
-void placeBet(bool& checkBet, int& playerMoney, int& playerTempMoney, 
-	          int& dealerMoney, int& dealerTempMoney, int& playerBet, int& dealerBet )
-{
-	checkBet = true;
-	
-	
-		
-			std::cout << "Enter your bet: ";
-			std::cin >> playerBet;
+			
+			std::cout << "Enter first side: ";
+			std::cin >> a;
 			std::cin.clear();
 			std::cin.ignore(10000, '\n');
 			std::cout << std::endl;
 
-			
-		
-		if (playerBet > playerMoney)
-		{
-			std::cout << "ERROR!!! You don t have that much money\n";
-			
-		}
-		else if (playerBet > dealerMoney)
-		{
-			std::cout << "Warning! Bet can't be higher then dealer's money\n";
-			
-		}
-		else
-		{
-			checkBet = false;
-			dealerBet = playerBet;
-			playerTempMoney = playerMoney;
-			dealerTempMoney = dealerMoney;
-			playerMoney -= playerBet;
-			dealerMoney -= dealerBet;
-		}
-}
+			std::cout << "Enter second side: ";
+			std::cin >> b;
+			std::cin.clear();
+			std::cin.ignore(10000, '\n');
 
- void checkResult(int& _playerMoney, int& _playerTempMoney , int& _dealerMoney, int& _dealerTempMoney,
-	int& _playerBet, int& _dealerBet, int& playerCards, int& dealerCards)
+			std::cout << std::endl; std::cout << "Enter third side: ";
+			std::cin >> c;
+			std::cin.clear();
+			std::cin.ignore(10000, '\n');
+			std::cout << std::endl;
+			if ((a + b) > c && (a + c) > b && (b + c) > a)
+			{
+				check = false;
+				break;
+			}
+			else
+				std::cout << "ERROR. Two sides together must be bigger then third side for triangle!" << std::endl;
+		}
+	}
+
+
+
+	double getPerimiter()
+	{
+		return a + b + c;
+	}
+
+	double getArea()
+	{
+		double s = getPerimiter() / 2;
+		return sqrt(s*(s - a)*(s - b)*(s - c));
+	}
+
+	std::string getName()
+	{
+		return "Triangle";
+	}
+
+ void printShapeInfo() 
+	{
+		std::cout << "Shape name " << getName() << std::endl;
+		std::cout << getName() << " perimiter is  " << getPerimiter() << std::endl;
+		std::cout << getName() << " area is " << getArea() << std::endl;
+		std::cout << "========================================================================" << std::endl;
+	}
+
+};
+
+class Circle : public IShape
 {
-	
-	
-	
-	if (playerCards == dealerCards && playerCards <= 21)
-	{
-		if (dealerCards < 21)
-		{
-			int dealerPickCard = (rand() % 10) + 1;
-			dealerCards += dealerPickCard;
-			std::cout << "Dealer picked card " << dealerPickCard << "\n"
-				"\nand now has " << dealerCards << std::endl;
-		}
-		else
-		{
+public:
+	float radius;
 
-			std::cout << "DRAW!" << std::endl;
-			_playerMoney = _playerTempMoney;
-			_dealerMoney = _dealerTempMoney;
+	void setValue()
+	{
+		std::cout << "Enter circle radius : ";
+		std::cin >> radius;
+		std::cin.clear();
+		std::cin.ignore(10000, '\n');
+		std::cout << std::endl;
+	}
 
-		}
+	double getPerimiter()
+	{
+		return 2 * radius * _Pi;
 	}
+	double getArea()
+	{
 		
+		return radius * radius * _Pi / 2;
+	}
 
- 
-	
-	if (dealerCards > 21)
+	std::string getName()
 	{
-		std::cout << "Dealer has too many points. You WIN !!!";
-		_playerMoney = _playerMoney + (_dealerBet * 2);
-		
+		return "Circle";
 	}
-	if (playerCards > dealerCards && playerCards <= 21)
+	void printShapeInfo()
 	{
-		std::cout << "You WIN !!!";
-		 _playerMoney = _playerMoney + (_dealerBet * 2);
-		
+		std::cout << "Shape name " << getName() << std::endl;
+		std::cout << getName() << " perimiter is  " << getPerimiter() << std::endl;
+		std::cout << getName() << " area is " << getArea() << std::endl;
+		std::cout << "========================================================================" << std::endl;
 	}
-	if (playerCards < dealerCards && dealerCards <= 21)
+
+private:
+	float _Pi = 3.14;
+
+};
+
+class Rectangle : public IShape
+{
+public:
+	float a, b;
+
+	void setValue()
 	{
-		std::cout << "You loose !!!";
-		
-		 _dealerMoney = _dealerMoney + (_playerBet * 2);
-		
+		std::cout << "Enter first side: ";
+		std::cin >> a;
+		std::cin.clear();
+		std::cin.ignore(10000, '\n');
+		std::cout << std::endl;
+
+		std::cout << "Enter second side: ";
+		std::cin >> b;
+		std::cin.clear();
+		std::cin.ignore(10000, '\n');
+		std::cout << std::endl;
 	}
-	
+
+	double getPerimiter()
+	{
+		return 2 * a + 2 * b;
+	}
+	double getArea()
+	{
+
+		return a * b;
+	}
+
+	std::string getName()
+	{
+		return "Rectangle";
+	}
+
+	void printShapeInfo()
+	{
+		std::cout << "Shape name " << getName() << std::endl;
+		std::cout << getName() << " perimiter is  " << getPerimiter() << std::endl;
+		std::cout << getName() << " area is " << getArea() << std::endl;
+		std::cout << "===============================================" << std::endl;
+	}
+
+};
+
+
+
+
+ void inputData(std::string message, int& data)
+{
+	 std::cout << message;
+	 std::cout << std::endl;
+	 std::cin >> data;
+	 std::cin.clear();
+	 std::cin.ignore(10000, '\n');
+	 std::cout << std::endl;
 }
+
+
+
+
+
+
 
 
 
 int main()
 {
-	int playerMoney ;
-	int dealerMoney ;
-	int playerBet = 0;
-	int dealerBet = 0;
-	bool check = true;
-	bool checkBet = true;
-	bool moneyCheck = true;
-	int playerTempMoney = 0;
-	int dealerTempMoney = 0;
-	int gameFlow = 0;
-	char choice = 'a';
-	
-	
-	
-	Dealer card;
+	int choseShape = 0;
+	int numOfShapes = 0;
 
-	while (moneyCheck)
+	Rectangle* rect = new Rectangle();
 
+	Circle* circle = new Circle();
+
+	Triangle* triangle = new Triangle();
+
+	
+
+	std::vector<IShape*> shapes;
+	shapes.push_back(rect);
+
+	shapes.push_back(circle);
+
+	shapes.push_back(triangle);
+
+	/*for (size_t i = 0; i < shapes.size(); i++)
 	{
-		playerMoney = 1000;
-		dealerMoney = 1000;
+		shapes[i]->setValue();
+	}
 
-	std::cout << "1. Start game\n\n"
-		"2. Exit\n\n";
-	std::cin >> gameFlow;
-
-	switch (gameFlow)
+	for (size_t i = 0; i < shapes.size(); i++)
 	{
+		shapes[i]->printShapeInfo();
+	}*/
 
+	
+	inputData("Enter which shape you want(1.Rectangle / 2. Circle / 3.Triangle) ", choseShape);
+	switch (choseShape)
+	{
 	case 1:
 	{
-		check = true;
-		while (check)
+
+		inputData("How much shapes do you want ", numOfShapes);
+		for (size_t i = 0; i < numOfShapes; i++)
 		{
-			checkBet = true;
-
-			while (checkBet)
-			{
-
-				placeBet(checkBet, playerMoney, playerTempMoney,
-					dealerMoney, dealerTempMoney, playerBet, dealerBet);
-				
-			}
-			card.randomCards();
-
-			card.playerCards();
-			
-				if (card.playerRandomCards == 21)
-				{
-					std::cout << "Congradilation! You earned max points" << std::endl;
-					
-				}
-				else
-				{ 
-					while ((choice != 'n' || choice != 'N') && card.playerRandomCards <=21)
-					{
-						std::cout << "Hit or hold (y / n)" << std::endl;
-						std::cin >> choice;
-						std::cin.clear();
-						std::cin.ignore(10000, '\n');
-						if (choice == 'n' || choice == 'N')
-							break;
-						else if (choice == 'y' || choice == 'Y')
-						
-							
-							card.drawCard();
-						
-						else
-							std::cout << "ERROR! Wrong input!\n";
-					}
-					
-				}
-				
-				if (card.playerRandomCards > 21)
-				{
-					dealerMoney = dealerMoney + (playerBet * 2);
-					
-				}
-				else
-				{
-
-					card.dealerCards();
-					if (card.dealerRandomCards > card.playerRandomCards)
-					{
-						std::cout << "Dealer don t want to pick a card this round!" << std::endl;
-
-					}
-					else
-					{
-						card.dealerDrawCard();
-					}
-					
-
-					checkResult( playerMoney, playerTempMoney, dealerMoney, dealerTempMoney,
-						playerBet, dealerBet, card.playerRandomCards, card.dealerRandomCards);
-				}
-			std::cout << "\n\nPlayer money: " << playerMoney;
-			std::cout << "\n\nDealer money: " << dealerMoney << "\n\n\n";
-
-			if (playerMoney <= 0)
-			{
-				std::cout << "Congradilations Mr. Dealer! You won\n" << std::endl;
-				check = false;
-				
-
-			}
-			if (dealerMoney <= 0)
-			{
-				std::cout << "Congradilations Mr. Player! You won\n" << std::endl;
-				check = false;
-				
-			}
-			
-		}//end of while check
+			shapes.at(0)->setValue();
+			shapes.at(0)->printShapeInfo();
+		}
 
 		break;
 
-	}//end of case 1
-
+	}
 	case 2:
 	{
-		moneyCheck = false;
+		inputData("How much shapes do you want", numOfShapes);
+		for (size_t i = 0; i < numOfShapes; i++)
+		{
+			shapes.at(1)->setValue();
+			shapes.at(1)->printShapeInfo();
+		}
+		break;
+	}
+	case 3:
+	{
+		inputData("How much shapes do you want", numOfShapes);
+		for (size_t i = 0; i < numOfShapes; i++)
+		{
+			shapes.at(2)->setValue();
+			shapes.at(2)->printShapeInfo();
+		}
 		break;
 	}
 	default:
-		std::cout << "ERROR!Wrong input!!!\n\n";
+	{
+		std::cout << "Wrong input!";
 		break;
+	}
+	
+	}
 
-
-	}//end of switch
-	}//end of moneyCheck while
 	system("pause");
-
 
 }
